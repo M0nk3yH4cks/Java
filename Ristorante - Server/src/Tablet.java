@@ -12,16 +12,17 @@ public class Tablet extends Thread{
 
     @Override
     public void run() {
-        // Dichiarazione variabili e connessione.
-        Socket skt = null;
-        try {
-            skt = new Socket("localhost", 1234);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("\t\t\t----------Client Started----------");
 
         while (true) {
+            // Dichiarazione variabili e connessione.
+            Socket skt = null;
+            try {
+                skt = new Socket("localhost", 1234);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("\t\t\t----------Client Started----------");
+
             try {
                 BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
                 DataOutputStream outToServer = new DataOutputStream(skt.getOutputStream());
@@ -92,9 +93,29 @@ public class Tablet extends Thread{
 
                 // Dividiamo gli ordini in base all'ordine che dobbiamo fare
                 if(drinkIndex != 0 && Integer.parseInt(_order) >= drinkIndex){
+                    skt.close();
+                    skt = new Socket("localhost", 1423);
 
+                    outToServer = new DataOutputStream(skt.getOutputStream());
+                    inFromServer = new BufferedReader(new InputStreamReader(skt.getInputStream()));
+
+                    //outputString = _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1);
+
+                    outToServer.writeBytes( _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1) + "\n");
+                    System.out.println(inFromServer.readLine());
+
+                    skt.close();
                 }else {
+                    skt.close();
+                    skt = new Socket("localhost", 4321);
 
+                    outToServer = new DataOutputStream(skt.getOutputStream());
+                    inFromServer = new BufferedReader(new InputStreamReader(skt.getInputStream()));
+
+                    //outputString = _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1);
+
+                    outToServer.writeBytes( _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1) + "\n");
+                    System.out.println(inFromServer.readLine());
                 }
 
                 outToServer.flush();

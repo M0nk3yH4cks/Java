@@ -1,9 +1,5 @@
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 // Dichiarazione Prodotti
 public class ServerMagazzino implements Runnable{
