@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Bar {
     int _order = -1;
     String prodottiDisponibili;

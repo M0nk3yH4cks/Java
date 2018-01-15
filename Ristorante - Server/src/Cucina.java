@@ -1,24 +1,22 @@
-import java.util.List;
-
 public class Cucina {
-    int _order;
-    List prodottiDisponibili;
+    int _order = -1;
+    String prodottiDisponibili;
 
     // SET Section
-    public void set_order(int _order){
+    synchronized public void set_order(int _order){
         this._order = _order;
     }
 
-    public void setProdottiDisponibili(List prodottiDisponibili){
+    synchronized public void setProdottiDisponibili(String prodottiDisponibili){
         this.prodottiDisponibili = prodottiDisponibili;
     }
 
     // GET Section
-    public List getProdottiDisponibili(){
+    synchronized public String getProdottiDisponibili(){
         return this.prodottiDisponibili;
     }
 
-    public int get_order(){
+    synchronized public int get_order(){
         return this._order;
     }
 }

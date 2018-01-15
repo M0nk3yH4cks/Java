@@ -3,12 +3,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class LauncherCucina {
+public class CucinaLauncher {
 
     // ///----------------------------------------Instance Variable Fields
     ServerSocket ss = null;
     Socket incoming = null;
-    public Cucina cucina = new Cucina();
+    public Cucina bar = new Cucina();
 
     // ///----------------------------------------Instance Variable Fields
 
@@ -31,7 +31,7 @@ public class LauncherCucina {
                 System.out.println("Socket Accepted");
                 socList.add(incoming);
                 System.out.println("Incoming: " + incoming);
-                new Thread(new CucinaServer(incoming, cucina)).start();
+                new Thread(new CucinaServer(incoming, bar)).start();
 
             }
 

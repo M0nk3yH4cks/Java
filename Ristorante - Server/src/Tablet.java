@@ -94,14 +94,14 @@ public class Tablet extends Thread{
                 // Dividiamo gli ordini in base all'ordine che dobbiamo fare
                 if(drinkIndex != 0 && Integer.parseInt(_order) >= drinkIndex){
                     skt.close();
-                    skt = new Socket("localhost", 1423);
+                    skt = new Socket("localhost", 4040);
 
                     outToServer = new DataOutputStream(skt.getOutputStream());
                     inFromServer = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 
                     //outputString = _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1);
 
-                    outToServer.writeBytes( _order + "," + tempProductsList.toString().substring(1, tempProductsList.toString().length() - 1) + "\n");
+                    outToServer.writeBytes( _order + "," + tempProductsList.get(Integer.parseInt(_order)) + "\n");
                     System.out.println(inFromServer.readLine());
 
                     skt.close();
