@@ -35,6 +35,7 @@ public class ServerMagazzino implements Runnable{
 
                 try {
                     magazzino.setProdottiDisponibili();
+                    isDone = true;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (RuntimeException re) {
@@ -44,6 +45,7 @@ public class ServerMagazzino implements Runnable{
 
                 String input = String.valueOf(inFromClient.readLine()).trim();
                 System.out.println("Stringa in input: " + input);
+
 
                 String[] testEntity = input.split(",");
                 if (testEntity[0].equals("Fornitore")) {
@@ -59,6 +61,7 @@ public class ServerMagazzino implements Runnable{
                     }
                 } else if (testEntity[0].equals("Bar")) {
                     System.out.println(">>> Avvio Bar...");
+                    magazzino.setItemCount(Integer.parseInt(testEntity[1]), testEntity[2]);
                 }
 
                 outToClient.flush();

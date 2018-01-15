@@ -101,7 +101,7 @@ public class Tablet extends Thread{
 
                     //outputString = _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1);
 
-                    outToServer.writeBytes( _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1) + "\n");
+                    outToServer.writeBytes( _order + "," + tempProductsList.toString().substring(1, tempProductsList.toString().length() - 1) + "\n");
                     System.out.println(inFromServer.readLine());
 
                     skt.close();

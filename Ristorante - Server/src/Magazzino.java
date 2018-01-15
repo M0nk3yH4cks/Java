@@ -26,11 +26,11 @@ public class Magazzino {
     Fornitore approvvigiona = new Fornitore();      // Dichiarazione del Fornitore
     int appSize = 0;
 
-    public void setAppSize(int appSize){
+    synchronized public void setAppSize(int appSize){
         this.appSize = appSize;
     }
 
-    public void setProdottiDisponibili() throws InterruptedException {
+    synchronized public void setProdottiDisponibili() throws InterruptedException {
         List<String> prodottiDisponibili = new ArrayList<String>();     // Dichiarazione Lista d'appoggio Temporanea
         if (this.Pizza > 0)
             prodottiDisponibili.add("Pizza");
@@ -73,11 +73,11 @@ public class Magazzino {
         }
     }
 
-    public List getProdottiDisponibili() {
+    synchronized  List getProdottiDisponibili() {
         return prodottiDisponibili;
     }
 
-    public void getApprovvigionamenti(){
+    synchronized public void getApprovvigionamenti(){
         if (appSize == 0)
             throw new RuntimeException("This is thrown intentionally");
         try {
@@ -104,8 +104,8 @@ public class Magazzino {
         }
     }
 
-    public void setItemCount(int option,List<String> itemList){
-        String item = itemList.get(option);
+    synchronized public void setItemCount(int option,String itemList){
+        String item = itemList;
         if(item.equals("Pizza"))
             this.Pizza--;
         else if(item.equals("Pasta in bianco"))
@@ -139,5 +139,7 @@ public class Magazzino {
         else if(item.equals("Birra"))
             this.Birra--;
         else this.Succo--;
+
+        System.err.println("FUCKIN UPDATED");
     }
 }

@@ -1,24 +1,24 @@
 import java.util.List;
 
 public class Bar {
-    int _order;
+    int _order = -1;
     List prodottiDisponibili;
 
     // SET Section
-    public void set_order(int _order){
+    synchronized public void set_order(int _order){
         this._order = _order;
     }
 
-    public void setProdottiDisponibili(List prodottiDisponibili){
+    synchronized public void setProdottiDisponibili(List prodottiDisponibili){
         this.prodottiDisponibili = prodottiDisponibili;
     }
 
     // GET Section
-    public List getProdottiDisponibili(){
+    synchronized public List getProdottiDisponibili(){
         return this.prodottiDisponibili;
     }
 
-    public int get_order(){
+    synchronized public int get_order(){
         return this._order;
     }
 }

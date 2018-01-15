@@ -37,17 +37,27 @@ public class BarServer implements Runnable{
                 BufferedReader inFromClient = new BufferedReader(new InputStreamReader(sInThread.getInputStream()));
 
                 String input = String.valueOf(inFromClient.readLine()).trim();
-                String[] splittedInput = input.split(",");
+                if(input.equals("req")){
+                    System.out.println("Client Bar Connesso...<<<");
+                    if(bar.get_order() != -1) {
+                        System.out.println("Fornendo Dati:\nOrdine : " + bar.get_order() + "\nLista: " + bar.getProdottiDisponibili());
+                        outToClient.writeBytes(bar.get_order() + "," + bar.getProdottiDisponibili().toString().substring(1,bar.getProdottiDisponibili().toString().length()-1) + "\n");
+                        System.out.println(">>>Soddifatta Richieseta Client Bar...");
+                    }
+                }else {
+                    System.out.println("Client Tablet Connesso <<<");
+                    String[] splittedInput = input.split(",");
 
-                int _order = Integer.valueOf(splittedInput[0]);
-                List prodottiDisponibili = new ArrayList<String>();;
+                    int _order = Integer.valueOf(splittedInput[0]);
+                    List prodottiDisponibili = new ArrayList<String>();
 
-                Collections.addAll(prodottiDisponibili, splittedInput[1]);
+                    Collections.addAll(prodottiDisponibili, splittedInput[1]);
 
-                bar.set_order(_order);
-                bar.setProdottiDisponibili(prodottiDisponibili);
-
-                outToClient.writeBytes("Operation Completed" + "\n");
+                    bar.set_order(_order);
+                    bar.setProdottiDisponibili(prodottiDisponibili);
+                    System.out.println("Operazioni Completate\nFile Inviati : " + _order + " || " + prodottiDisponibili);
+                    outToClient.writeBytes("Operation Completed" + "\n");
+                }
                 outToClient.flush();
             } catch (IOException e) {
                 e.printStackTrace();
