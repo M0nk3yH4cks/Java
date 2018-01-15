@@ -3,6 +3,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,14 +17,20 @@ public class PC_Bar extends Thread {
             Socket skt = null;
             try {
                 skt = new Socket("localhost", 4321);
+                skt.setSoTimeout(1000);
                 DataOutputStream outToServer = new DataOutputStream(skt.getOutputStream());
                 BufferedReader inFromServer = new BufferedReader(new InputStreamReader(skt.getInputStream()));
+                String input = null;
 
                 System.out.println("\t\t\t----------Client Started----------\nRequesting Order");
 
                 outToServer.writeBytes("req" + "\n");
                 System.out.println("Request Sent");
-                String input = inFromServer.readLine();
+                try {
+                    input = inFromServer.readLine();
+                }catch (SocketTimeoutException e){
+                    run();
+                }
 
                 System.out.println("Received Order:\n" + input);
             /*String[] splittedInput = input.split(",");

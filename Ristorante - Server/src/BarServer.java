@@ -41,21 +41,22 @@ public class BarServer implements Runnable{
                     System.out.println("Client Bar Connesso...<<<");
                     if(bar.get_order() != -1) {
                         System.out.println("Fornendo Dati:\nOrdine : " + bar.get_order() + "\nLista: " + bar.getProdottiDisponibili());
-                        outToClient.writeBytes(bar.get_order() + "," + bar.getProdottiDisponibili().toString().substring(1,bar.getProdottiDisponibili().toString().length()-1) + "\n");
+                        outToClient.writeBytes(bar.get_order() + "," + bar.getProdottiDisponibili() + "\n");
                         System.out.println(">>>Soddifatta Richieseta Client Bar...");
+                        bar.set_order(-1);
                     }
                 }else {
                     System.out.println("Client Tablet Connesso <<<");
                     String[] splittedInput = input.split(",");
 
+                    System.err.println(input);
                     int _order = Integer.valueOf(splittedInput[0]);
-                    List prodottiDisponibili = new ArrayList<String>();
 
-                    Collections.addAll(prodottiDisponibili, splittedInput[1]);
+
 
                     bar.set_order(_order);
-                    bar.setProdottiDisponibili(prodottiDisponibili);
-                    System.out.println("Operazioni Completate\nFile Inviati : " + _order + " || " + prodottiDisponibili);
+                    bar.setProdottiDisponibili(splittedInput[1]);
+                    System.out.println("Operazioni Completate\nFile Inviati : " + _order + " || " + splittedInput[1]);
                     outToClient.writeBytes("Operation Completed" + "\n");
                 }
                 outToClient.flush();

@@ -113,8 +113,7 @@ public class Tablet extends Thread{
                     inFromServer = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 
                     //outputString = _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1);
-
-                    outToServer.writeBytes( _order + "," + tempProductsList.toString().substring(1, inputString.length() - 1) + "\n");
+                    outToServer.writeBytes( _order + "," + tempProductsList.get(Integer.parseInt(_order)) + "\n");
                     System.out.println(inFromServer.readLine());
                 }
 
@@ -126,6 +125,7 @@ public class Tablet extends Thread{
                     e1.printStackTrace();
                 }
                 System.out.print("Whoops! It didn't work!\n");
+                e.printStackTrace();
             }
         }
     }
